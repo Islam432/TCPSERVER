@@ -3,6 +3,7 @@ import express, { Express, urlencoded, json, Request, Response } from 'express'
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 import morgan from 'morgan'
+import mainRouter from './mainRouter'
 dotenv.config()
 const bodyParser = require('body-parser');
 
@@ -13,8 +14,8 @@ app.use(urlencoded({ extended: true }))
 app.use(json())
 app.use(morgan('short'))
 
-app.get('/', (req: Request, res: Response) => res.send('Server working!'))
-
+app.get('/get', (req: Request, res: Response) => res.send('Server working!'))
+app.use('/api/v1', mainRouter)
 
 const port = process.env.PORT || 3000
 
