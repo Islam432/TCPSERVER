@@ -1,5 +1,4 @@
 
-import { Router } from "express"
 import battryRouter from "../src/routes_arduino/Battery/battery.route"
 import { Router } from 'express'
 
