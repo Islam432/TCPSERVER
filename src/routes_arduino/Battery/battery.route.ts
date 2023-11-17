@@ -1,11 +1,11 @@
 import { Router } from 'express'
-import { GetBattery } from './battery.controller';
+import { postBattery } from './battery.controller';
 
 
 
 const router = Router()
 
-router.route("/").post(GetBattery)
+router.route("/").post(postBattery)
 
 
 export default router;
