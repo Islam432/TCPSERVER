@@ -1,9 +1,10 @@
 
-import express, { Express, urlencoded, json, Request, Response } from 'express'
+import express, { Express, urlencoded, json, Request, Response,  } from 'express'
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 import morgan from 'morgan'
 import mainRouter from './mainRouter'
+import applicationRouter from './allicationRouter'
 dotenv.config()
 const bodyParser = require('body-parser');
 
@@ -16,7 +17,7 @@ app.use(morgan('short'))
 
 app.get('/', (req: Request, res: Response) => res.send('Server working!'))
 app.use('/api/v1', mainRouter)
-
+app.use('/api/v2', applicationRouter)
 const port = process.env.PORT || 3000
 
 app.listen(port, () => {
