@@ -13,7 +13,6 @@ export async function apiTest(req: Request, res: Response) {
     }
 }
 export async function apiGet(req:Request, res:Response){
-
     const {data} =req.body
     res.send('test Random Working')
 }
