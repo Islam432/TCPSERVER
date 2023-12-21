@@ -3,11 +3,7 @@ const fs = require('fs');
 
 const PRIVATE_KEY = fs.readFileSync(`${__dirname}/../keys/id_rsa_priv.pem`, 'utf-8')
 
-const user = {
-  email: 'user@.com',
-  /* role_name: 'admin',
-   id: 1, */
-};
+
 
 function issueJWT(user: { email: string; /* role_name: string; */ /* id: number */ }) {
   const { email, /* role_name, id  */} = user
