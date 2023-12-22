@@ -14,8 +14,10 @@ app.use(urlencoded({ extended: true }))
 app.use(json())
 app.use(morgan('short'))
 
-app.get('/get', (req: Request, res: Response) => res.send('Server working!'))
+app.get('/', (req: Request, res: Response) => res.send('Server working!'))
 app.use('/api/v1', mainRouter)
+
+app.use(express.json());
 
 const port = process.env.PORT || 3000
 
