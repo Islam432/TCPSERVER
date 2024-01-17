@@ -25,3 +25,8 @@ error: Ошибка: Данные не были отправлены
 {"level":"info","message":"Данные успешно получены: {\"email\":\"islam2004tr@mail.ru\"}"}
 {"level":"info","message":"Данные успешно получены: {\"email\":\"test4@gmail.com\"}"}
 {"level":"info","message":"Данные успешно получены: {\"email\":\"test4@gmail.com\"}"}
+{"level":"info","message":"Данные успешно получены: {\"email\":\"islam2004tr@mail.ru\"}","timestamp":"2024-01-17T07:54:51.678Z"}
+{"level":"info","message":"Данные успешно получены: [object Object]","timestamp":"2024-01-17T08:27:49.546Z"}
+{"level":"info","message":"Данные успешно получены: [object Object]","timestamp":"2024-01-17T08:27:50.460Z"}
+{"level":"info","message":"{\"email\":\"test4@gmail.com\"}","timestamp":"2024-01-17T08:39:04.156Z"}
+{"level":"info","message":"{\"email\":\"test4@gmail.com\"}","timestamp":"2024-01-17T08:39:04.315Z"}

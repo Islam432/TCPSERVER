@@ -1,39 +1,35 @@
-import { Request, Response } from 'express'
+import { Request, Response } from 'express';
 // import {awsConnection} from "../../connection"
 import winston from 'winston';
 import BadRequestError from '../../errors/bad-request';
 import { StatusCodes } from 'http-status-codes';
 
-
 export async function test(req: Request, res: Response) {
-const {data} = req.body;
-const result = data;
-// const params = {
-//     Bucket: 'YOUR_BUCKET_NAME',
-//     Key: 'YOUR_OBJECT_KEY',
-//     Body: data, 
-//     ContentType: 'text/plain' 
-//   };
-try {
-// Создаем логгер
-const logger = winston.createLogger({
-  transports: [
-    new winston.transports.Console(), // Вывод в консоль
-    new winston.transports.File({ filename: 'server.log' }), // Запись в файл
-  ],
-});
-const dataString = JSON.stringify(data);
-logger.info(`Данные успешно получены: ${dataString}`);
+  const { data } = req.body; // Трой что то не так  
+  const result = data;
 
-
+  try {
    
-    // ...
-console.log(data)
-    // Отправка данных обратно в ответ на запрос
-    res.status(StatusCodes.OK).json({ result: data });  
-  } catch (error) {
-    // Обработка ошибок, если необходимо
-    throw new BadRequestError("данные не отправлены");
-  }
+    const logger = winston.createLogger({
+      transports: [
+        new winston.transports.Console(), 
+        new winston.transports.File({ filename: 'server.log' }),
+      ],
+      format: winston.format.combine(
+        winston.format.timestamp(), 
+        winston.format.json() 
+      ),
+    });
 
+    const dataString = JSON.stringify(req.body);
+    logger.info(`данные успешно получены: ${dataString}`);
+
+    console.log(data);
+
+    
+    res.status(StatusCodes.OK).json({ result: data });
+  } catch (error) {
+
+    throw new BadRequestError('данные не отправлены');
+  }
 }
