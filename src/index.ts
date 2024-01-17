@@ -17,7 +17,7 @@ app.use(morgan('short'))
 app.get('/', (req: Request, res: Response) => res.send('Server working!'))
 app.use('/api/v1', mainRouter)
 
-app.use(express.json());
+app.use(express.json()); 
 
 const port = process.env.PORT || 3000
 
@@ -25,3 +25,4 @@ app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`)
   console.log(`worker pid ${process.pid}`)
 })
+
