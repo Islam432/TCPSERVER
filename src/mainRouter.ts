@@ -8,7 +8,7 @@ const mainRouter = Router()
 mainRouter.use("/test", test)
 
 mainRouter.use("/auth", auth)
-mainRouter.use("/battery", battryRouter)
+mainRouter.use("/arduino-data", battryRouter)
 mainRouter.use("/SolarP", solorPanels)
 
 

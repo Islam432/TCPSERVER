@@ -2,25 +2,34 @@ import { Request, Response } from 'express'
 // import {awsConnection} from "../../connection"
 import BadRequestError from '../../errors/bad-request';
 import { StatusCodes } from 'http-status-codes';
-
+import winston from 'winston';
 
 export async function postBattery(req: Request, res: Response) {
 const {data} = req.body;
 
-// const params = {
-//     Bucket: 'YOUR_BUCKET_NAME',
-//     Key: 'YOUR_OBJECT_KEY',
-//     Body: data, 
-//     ContentType: 'text/plain' 
-//   };
-  
-try{
-    // const result = await awsConnection.putObject(params).promise();
-res.send(data)
-    return res.status(StatusCodes.OK).json({ message: 'данныйе успешно отправлены' })
+try {
+   
+    const logger = winston.createLogger({
+      transports: [
+        new winston.transports.Console(), 
+        new winston.transports.File({ filename: 'server.log' }),
+      ],
+      format: winston.format.combine(
+        winston.format.timestamp(), 
+        winston.format.json() 
+      ),
+    });
 
-}catch{
-    throw new BadRequestError("данные не отправлены");
-}
+    const dataString = JSON.stringify(req.body);
+    logger.info(`данные успешно получены: ${dataString}`);
+
+    console.log(data);
+
+    
+    res.status(StatusCodes.OK).json({ result: data });
+  } catch (error) {
+
+    throw new BadRequestError('данные не отправлены');
+  }
 
 }
