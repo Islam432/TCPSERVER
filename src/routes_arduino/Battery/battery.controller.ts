@@ -7,13 +7,6 @@ import winston from 'winston';
 export async function postBattery(req: Request, res: Response) {
 const {data} = req.body;
 
-// const params = {
-//     Bucket: 'YOUR_BUCKET_NAME',
-//     Key: 'YOUR_OBJECT_KEY',
-//     Body: data, 
-//     ContentType: 'text/plain' 
-//   };
-  
 try {
    
     const logger = winston.createLogger({
