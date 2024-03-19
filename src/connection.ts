@@ -1,9 +1,14 @@
-// import * as dotenv from 'dotenv'
-// import AWS from "aws-sdk"
-// dotenv.config()
+import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
 
-// export const awsConnection = new AWS.S3({
-//     accessKeyId: 'YOUR_ACCESS_KEY',
-//     secretAccessKey: 'YOUR_SECRET_KEY',
-//     region: 'YOUR_REGION'
-//   });
+dotenv.config();
+
+export async function createDBConnection() {
+  const connection = await mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+  });
+  return connection;
+}
