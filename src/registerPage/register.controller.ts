@@ -13,16 +13,16 @@ export const Register = async (req: Request, res: Response) => {
   try {
     const { email, password } = authuserShema.parse({ ...req.body });
     const connection = await createDBConnection();
+    console.log(req.body)
     
-    
-    const emailExistsQuery = 'SELECT COUNT(*) AS emailCount FROM Users WHERE email = ?';
+    const emailExistsQuery = 'SELECT COUNT(*) AS emailCount FROM users WHERE email = ?';
     const [rows] = await connection.execute(emailExistsQuery, [email]);
     if (rows[0].emailCount > 0) {
       throw new BadRequestError('Email уже существует');
     }
 
 
-    const insertQuery = 'INSERT INTO Users (email, password) VALUES (?, ?)';
+    const insertQuery = 'INSERT INTO users (email, password) VALUES (?, ?)';
     await connection.execute(insertQuery, [email, password]);
     const dbUser: any = email;
     
