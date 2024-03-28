@@ -15,7 +15,7 @@ export const Register = async (req: Request, res: Response) => {
     const connection = await createDBConnection();
     
     
-    const emailExistsQuery = 'SELECT COUNT(*) AS emailCount FROM Users WHERE email = ?';
+    const emailExistsQuery = 'SELECT COUNT(*) AS emailCount FROM smart_crosswalk_parameters WHERE email = ?';
     const [rows] = await connection.execute(emailExistsQuery, [email]);
     if (rows[0].emailCount > 0) {
       throw new BadRequestError('Email уже существует');
@@ -24,13 +24,13 @@ export const Register = async (req: Request, res: Response) => {
 
     const insertQuery = 'INSERT INTO Users (email, password) VALUES (?, ?)';
     await connection.execute(insertQuery, [email, password]);
-    const dbUser: any = email;
+
     
    
     await connection.end();
 
    
-    return res.status(StatusCodes.OK).json(issueJWT(dbUser));
+   
   } catch (error) {
    
     console.error('Ошибка при регистрации пользователя:', error);
