@@ -13,6 +13,7 @@ export const Register = async (req: Request, res: Response) => {
   try {
     const { email, password } = authuserShema.parse({ ...req.body });
     const connection = await createDBConnection();
+    console.log(req.body)
     
     
     const emailExistsQuery = 'SELECT COUNT(*) AS emailCount FROM smart_crosswalk_parameters WHERE email = ?';
@@ -22,7 +23,7 @@ export const Register = async (req: Request, res: Response) => {
     }
 
 
-    const insertQuery = 'INSERT INTO Users (email, password) VALUES (?, ?)';
+    const insertQuery = 'INSERT INTO users (email, password) VALUES (?, ?)';
     await connection.execute(insertQuery, [email, password]);
 
     
