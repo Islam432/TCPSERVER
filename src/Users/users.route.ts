@@ -1,7 +1,10 @@
 import { Router } from "express";
-import { PostUserData } from "./users.controller";
+import { GetStarted, UbdateUserData } from "./users.controller";
 
 
 const router = Router()
 
-router.route("/all").post(PostUserData)
+router.route("/all").patch(UbdateUserData)
+router.route("/getId").get(GetStarted)
+
+export default router

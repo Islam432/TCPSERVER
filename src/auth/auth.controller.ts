@@ -1,23 +1,38 @@
 import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes';
 import { issueJWT } from '../utils/utils.jwt';
-export async function signin(req: Request, res: Response) {
-    const { email, password } = req.body
-   /*  let query = `
-      SELECT users.id, users.email, users.hash, users.salt, role.role_name, users.is_active
-      FROM users
-      INNER JOIN role ON users.role = role.id
-      WHERE (users.email=$1)`
-    const result = await pool.query(query, [email])
-    if (result.rows.length < 1) throw new NotFoundError('Пользователь не найден') */
-    const [dbUser] = email;
-   /*  if (dbUser.is_active === false) throw new Error('Дождитесь одобрения администратора')
-    const validPass = validPassword(password, dbUser.hash, dbUser.salt)
-    if (!validPass) throw new UnauthorizedError('Неверный пароль') */
-    return res.status(StatusCodes.OK).json(issueJWT(dbUser))
+import bcrypt from 'bcrypt';
+import { createDBConnection } from '../connection';
+import BadRequestError from '../errors/bad-request';
+import { authuserShema } from './authuserShema';export async function signin(req: Request, res: Response) {
+  try {
+    const { email, password } = authuserShema.parse(req.body);
+    const connection = await createDBConnection();
+
+    const emailExistsQuery = 'SELECT * FROM users WHERE email = ?';
+    const [rows] = await connection.execute(emailExistsQuery, [email]);
+
+    if (Array.isArray(rows) && rows.length > 0) {
+      const user = rows[0];
+      if ('password' in user) { // Проверяем наличие свойства 'password' в user
+        // const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (user.password !== null && password === user.password) {
+            return res.status(StatusCodes.OK).json(issueJWT({ email: user.email }));
+      } else {
+          // Если пароль не совпадает или пароль равен null, выбрасываем ошибку
+          throw new BadRequestError('Неверный пароль');
+      }
+
+      
+      } else {
+        throw new BadRequestError('Пользователь с таким email не найден');
+      }
+    } else {
+      throw new BadRequestError('Пользователь с таким email не найден');
+    }
+  } catch (error) {
+    console.error('Ошибка при аутентификации пользователя:', error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Ошибка при аутентификации пользователя' });
   }
-
-
-
-/* export async function signup(req: Request, res: Response) {}
- */
+}
